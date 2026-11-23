@@ -22,7 +22,7 @@ const Head = ({ n, label, title, accent, body }: { n: string; label: string; tit
 /* ---------- 03 · how it works ---------- */
 export function HowItWorks() {
   return (
-    <section id='how' className='relative mx-auto max-w-7xl px-5 py-24'>
+    <section id='how' className='relative mx-auto max-w-7xl overflow-x-clip px-5 py-24'>
       <div className='grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]'>
         <Head
           n='03'
@@ -46,16 +46,16 @@ export function BrainExplorer() {
   return (
     <section id='brain' className='relative overflow-hidden py-28'>
       <div className='absolute inset-0 -z-10'>
-        <img src={`${BASE}/img/core.jpg`} alt='' className='h-full w-full object-cover opacity-35' />
+        <img src={`${BASE}/img/core.jpg`} alt='' className='h-full w-full object-cover opacity-55' />
         <div className='absolute inset-0 bg-gradient-to-b from-[#110c08] via-[#110c08]/70 to-[#110c08]' />
       </div>
       <div className='mx-auto max-w-7xl px-5'>
         <Head
           n='04'
           label='Your second brain'
-          title='A memory that never'
-          accent='forgets.'
-          body='Your VisionOOH Brain is a folder of simple notes. You read it in Obsidian; Claude reads the same folder. Tap each part to see what lives there.'
+          title='A memory you'
+          accent='own.'
+          body='Your VisionOOH Brain is a folder of simple notes on your computer. You read it in Obsidian. Claude reads it when you upload a note to your Project, or directly in Claude Code. Tap each part to see what lives there.'
         />
         <div className='mt-12 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]'>
           <div className='hq-glass rounded-[28px] p-3'>
@@ -131,18 +131,26 @@ export function Numbers() {
   return (
     <section id='numbers' className='relative py-24'>
       <div className='mx-auto max-w-7xl px-5'>
-        <Head n='05' label='Your edge' title='Bharat is your' accent='launch pad.' body='Your proof, in numbers. Drag the cards. These are the lines Claude puts in every pitch.' />
+        <Head n='05' label='Your edge' title='Bharat is your' accent='launch pad.' body='Your proof, in numbers. Drag the cards. Claude uses these lines in your pitches; confirm each before a client sees it.' />
       </div>
       <div className='mx-auto mt-10 h-[min(78vw,620px)] max-w-6xl px-2'>
-        <WarpCarousel cards={cards} background='#110c08' font='"Inter", system-ui, sans-serif' style={{ width: '100%', height: '100%', borderRadius: 28 }} />
+        <WarpCarousel cards={cards} step={1} interval={4.5} warp={0.55} background='#110c08' font='"Inter", system-ui, sans-serif' style={{ width: '100%', height: '100%', borderRadius: 28 }} />
+      </div>
+      <div className='mx-auto mt-8 grid max-w-6xl grid-cols-2 gap-px overflow-hidden rounded-[22px] border border-[var(--hq-line)] bg-[var(--hq-line)] px-0 sm:grid-cols-4'>
+        {[['7,373', 'marketing contacts'], ['443', 'companies on your list'], ['877', 'senior contacts'], ['100+', 'towns (VisionOOH figure)']].map(([v, l]) => (
+          <div key={l} className='bg-[var(--hq-bg)] p-5'>
+            <p className='font-display text-4xl'>{v}</p>
+            <p className='hq-label mt-1 !text-[10px]'>{l}</p>
+          </div>
+        ))}
       </div>
       <div className='relative mx-auto mt-16 max-w-6xl overflow-hidden rounded-[32px] px-5'>
         <img src={`${BASE}/img/bharat.jpg`} alt='A lit, blank billboard on a highway entering an Indian town at dusk' className='h-[min(60vw,520px)] w-full rounded-[32px] object-cover' />
-        <div className='absolute inset-0 mx-5 rounded-[32px] bg-gradient-to-r from-[#110c08]/90 via-[#110c08]/30 to-transparent' />
-        <div className='absolute inset-y-0 left-10 flex max-w-md flex-col justify-center sm:left-16'>
+        <div className='absolute inset-0 mx-5 hidden rounded-[32px] bg-gradient-to-r from-[#110c08]/95 via-[#110c08]/55 to-transparent sm:block' />
+        <div className='relative mt-6 flex max-w-md flex-col justify-center sm:absolute sm:inset-y-0 sm:left-16 sm:mt-0'>
           <p className='hq-label'>Visibility must follow distribution</p>
           <p className='font-display mt-3 text-[clamp(2rem,4.4vw,3.6rem)] leading-[1]'>Every blank hoarding is a pitch <em className='text-[var(--hq-amber2)]'>waiting.</em></p>
-          <p className='mt-3 text-[15px] text-[var(--hq-ash)]'>7,373 decision-makers at 443 brands are on your list. Level 6 shows you how to reach them.</p>
+          <p className='mt-3 text-[15px] text-[var(--hq-ash)]'>Your list has 7,373 marketing contacts at 443 companies, 877 of them senior. Level 6 shows you how to reach them.</p>
         </div>
       </div>
     </section>
@@ -153,7 +161,7 @@ export function Numbers() {
 function CopyCmd({ label, cmd }: { label: string; cmd: string }) {
   const [c, setC] = useState(false)
   return (
-    <div>
+    <div className='min-w-0'>
       <p className='hq-label !text-[10px]'>{label}</p>
       <button
         onClick={async () => {
@@ -196,7 +204,7 @@ export function Toolkit() {
         ))}
       </div>
       <div className='mt-8 grid gap-5 lg:grid-cols-2'>
-        <div className='hq-glass rounded-[28px] p-6'>
+        <div className='hq-glass min-w-0 rounded-[28px] p-6'>
           <p className='font-display text-3xl'>More downloads</p>
           <div className='mt-5 grid gap-2'>
             {[
@@ -211,7 +219,7 @@ export function Toolkit() {
             ))}
           </div>
         </div>
-        <div className='hq-glass rounded-[28px] p-6'>
+        <div className='hq-glass min-w-0 rounded-[28px] p-6'>
           <p className='font-display text-3xl'>Power user: Claude Code</p>
           <p className='mt-2 text-[14.5px] text-[var(--hq-ash)]'>Level 7. Installs all eleven skills at once. Existing skills are never overwritten.</p>
           <div className='mt-5 space-y-4'>
@@ -263,9 +271,9 @@ export function Footer() {
             <>Next stop: <em className='text-[var(--hq-amber2)]'>{p.current.code.toLowerCase()}.</em></>
           )}
         </p>
-        <p className='mx-auto mt-4 max-w-lg text-[var(--hq-ash)]'>{p.rank.title} · {p.xp} of {p.max} XP · {p.completed} of 7 levels</p>
+        <p className='mx-auto mt-4 max-w-lg text-[var(--hq-ash)]'>{p.rank.title} · {p.xp} XP{p.rank.next ? ` · ${p.rank.next.min - p.xp} XP to ${p.rank.next.title}` : ''} · {p.completed} of 7 levels complete</p>
         <div className='mt-8 flex flex-wrap justify-center gap-3'>
-          <a href='#levels' className='inline-flex h-12 items-center rounded-full bg-[var(--hq-cream)] px-7 font-medium text-[#1a120b] hover:bg-white'>Continue my mission</a>
+          <a href='#levels' className='inline-flex h-12 items-center rounded-full bg-[var(--hq-cream)] px-7 font-medium text-[#1a120b] hover:bg-white'>{p.xp === 0 ? 'Start Level 1: Ignition' : `Continue: Level ${p.current.n}, ${p.current.title}`}</a>
           <a href='#top' className='inline-flex h-12 items-center rounded-full border border-[var(--hq-line)] px-7 hover:border-[var(--hq-cream)]'>Connect to Claude</a>
         </div>
       </div>

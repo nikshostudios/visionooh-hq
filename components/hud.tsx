@@ -61,11 +61,7 @@ export default function Hud({ onLaunch }: { onLaunch: () => void }) {
         </div>
       </a>
 
-      <a href='#levels' className='hq-glass fixed bottom-3 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-3 rounded-full px-4 py-2 sm:hidden'>
-        <span className='font-display text-lg'>{p.rank.title}</span>
-        <span className='font-code text-[11px] text-[var(--hq-amber2)]'>{p.xp} XP</span>
-        <span className='text-[11px] text-[var(--hq-ash)]'>{p.completed}/7</span>
-      </a>
+
 
       <AnimatePresence>
         {celebrate && (

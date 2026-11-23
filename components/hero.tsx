@@ -76,7 +76,7 @@ export default function Hero({ launchKey }: { launchKey: number }) {
             </span>
             <span className='hq-label !text-[10px]'>Input to connect to Claude</span>
           </div>
-          <div className='flex items-end gap-2'>
+          <div className='flex flex-col gap-2 sm:flex-row sm:items-end'>
             <textarea
               value={goal}
               onChange={e => setGoal(e.target.value)}
@@ -87,18 +87,19 @@ export default function Hero({ launchKey }: { launchKey: number }) {
                 }
               }}
               rows={2}
-              placeholder='Tell Claude what you want to do today…'
+              placeholder='What do you want to do today?'
               className='min-h-[64px] w-full resize-none bg-transparent px-4 py-3 text-[17px] text-[var(--hq-cream)] placeholder:text-[var(--hq-dim)] focus:outline-none'
             />
             <button
               type='submit'
-              className='mb-1 mr-1 inline-flex h-12 shrink-0 items-center gap-2 rounded-[20px] bg-[var(--hq-cream)] px-5 text-[15px] font-medium text-[#1a120b] transition hover:bg-white active:scale-[0.97]'
+              className='mx-1 mb-1 inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-[20px] bg-[var(--hq-cream)] px-5 text-[15px] font-medium text-[#1a120b] transition hover:bg-white active:scale-[0.97]'
             >
-              <Sparkles className='size-4' /> Connect
+              <Sparkles className='size-4' /> Connect to Claude
             </button>
           </div>
         </form>
-        <div className='hq-rise mb-4 mt-4 flex max-w-2xl flex-wrap justify-center gap-2' style={{ animationDelay: '.85s' }}>
+        <p className='hq-rise mt-3 text-[13px] text-[var(--hq-ash)]' style={{ animationDelay: '.8s' }}>Opens a new Claude chat that already knows you, VisionOOH and your level.</p>
+        <div className='hq-rise mb-4 mt-3 flex max-w-2xl flex-wrap justify-center gap-2' style={{ animationDelay: '.85s' }}>
           {CHIPS.map(c => (
             <button
               key={c}
@@ -115,8 +116,9 @@ export default function Hero({ launchKey }: { launchKey: number }) {
       </div>
 
       <div className='relative z-10 mx-auto flex w-full max-w-7xl items-end justify-between px-6 pb-6 font-display text-[clamp(1rem,1.7vw,1.5rem)] leading-tight text-[var(--hq-cream)]/75'>
-        <span className='max-w-[14ch] text-left'>Built for Akshay Jhinga, VisionOOH</span>
-        <span className='max-w-[16ch] text-right'>that learns, connects and launches.</span>
+        <span className='hidden max-w-[14ch] text-left sm:block'>Built for Akshay Jhinga, VisionOOH</span>
+        <span className='hidden max-w-[16ch] text-right sm:block'>that learns, connects and launches.</span>
+        <span className='w-full text-center text-[15px] sm:hidden'>Built for Akshay Jhinga · VisionOOH</span>
       </div>
 
       <AnimatePresence>
@@ -140,7 +142,7 @@ export default function Hero({ launchKey }: { launchKey: number }) {
                 <X className='size-5' />
               </button>
               <p className='hq-label'>Your Claude briefing is ready</p>
-              <h3 className='font-display mt-3 text-4xl'>Claude now knows <em className='text-[var(--hq-amber2)]'>everything.</em></h3>
+              <h3 className='font-display mt-3 text-4xl'>Your briefing is <em className='text-[var(--hq-amber2)]'>ready.</em></h3>
               <p className='mt-3 text-[15px] text-[var(--hq-ash)]'>
                 This briefing tells Claude who you are, your business, your level ({p.rank.title}, {p.xp} XP) and what you want. Open it in Claude, or copy and paste it into your “My Business” Project.
               </p>

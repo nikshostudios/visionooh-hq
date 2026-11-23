@@ -38,6 +38,7 @@ export type Level = {
   learn: string[]
   tasks: Task[]
   quiz: Quiz[]
+  result: string
 }
 
 const P = (s: string) => s.trim()
@@ -49,6 +50,7 @@ export const LEVELS: Level[] = [
     code: 'IGNITION',
     title: 'Talk to Claude',
     tagline: 'Your first real conversation with AI.',
+    result: 'one client reply drafted by Claude, checked and improved by you.',
     minutes: 10,
     learn: [
       'Claude is a very smart assistant that reads, writes, researches and thinks with you.',
@@ -104,6 +106,7 @@ Here is a message from a client (pasted below). Write two replies: one short Wha
     code: 'FUEL',
     title: 'Teach Claude your business',
     tagline: 'Never explain VisionOOH twice.',
+    result: 'a “My Business” Project that already knows VisionOOH.',
     minutes: 15,
     learn: [
       'A Project is a folder in Claude with its own memory: files and instructions it reads every time.',
@@ -162,6 +165,7 @@ Rules: keep answers short and practical. Never invent rates, sites, dates, reach
     code: 'THRUSTERS',
     title: 'Install your skills',
     tagline: 'Eleven ready-made playbooks for outdoor.',
+    result: 'a one-page brief on a brand you want to win, and six hoarding lines.',
     minutes: 15,
     learn: [
       'A skill is a saved playbook. Upload it once and Claude uses it whenever the job comes up.',
@@ -217,12 +221,13 @@ Rules: keep answers short and practical. Never invent rates, sites, dates, reach
     n: 4,
     code: 'SECOND BRAIN',
     title: 'Build your second brain',
-    tagline: 'One place that remembers everything for you.',
+    tagline: 'One place that holds what you know.',
+    result: 'your VisionOOH Brain open in Obsidian, with your first daily note.',
     minutes: 25,
     learn: [
       'A second brain is a folder of simple notes about your business: clients, towns, pitches, lessons.',
       'Obsidian is a free app that shows those notes beautifully and links them together.',
-      'Claude reads the same folder, so it knows every client, every pitch and what you decided last week.',
+      'Claude reads it when you upload a note to your Project, or directly when you use Claude Code (Level 7).',
     ],
     tasks: [
       {
@@ -275,6 +280,7 @@ Rules: keep answers short and practical. Never invent rates, sites, dates, reach
     code: 'NAVIGATION',
     title: 'Connect your tools',
     tagline: 'Let Claude read your inbox, calendar and drive.',
+    result: 'tomorrow’s meetings prepared, and a sourced research brief.',
     minutes: 15,
     learn: [
       'Connectors let Claude read Gmail, Google Calendar and Google Drive when you ask it to.',
@@ -323,10 +329,11 @@ Rules: keep answers short and practical. Never invent rates, sites, dates, reach
     n: 6,
     code: 'ORBIT',
     title: 'Turn leads into meetings',
-    tagline: '7,373 decision-makers. Start with ten.',
+    tagline: '7,373 marketing contacts. Start with ten.',
+    result: 'ten personal first messages, ready for you to send.',
     minutes: 30,
     learn: [
-      'Nikhil pulled 7,373 marketing decision-makers at 443 Indian brands for you.',
+      'Nikhil pulled 7,373 marketing contacts at 443 Indian companies for you.',
       'Start with Tier A: 877 senior people who sign off on outdoor spend.',
       'Short, specific messages win: something true about them, one line of proof, one easy ask.',
     ],
@@ -373,6 +380,7 @@ Rules: keep answers short and practical. Never invent rates, sites, dates, reach
     code: 'DEEP SPACE',
     title: 'Claude Code (power user)',
     tagline: 'Claude working directly inside your brain folder.',
+    result: 'Claude reading your vault and filling every gap with you.',
     minutes: 30,
     learn: [
       'Claude Code runs Claude on your computer, inside a folder. It can read and write your notes.',
@@ -444,7 +452,7 @@ export const SKILLS = [
 ]
 
 export const VAULT = [
-  { path: 'CLAUDE.md', kind: 'file', title: 'The rulebook', body: 'Claude reads this first, every time. It says who you are, where things live and the rules: never invent rates, draft only, keep clients apart.', example: '“Never quote a rate without asking Akshay.”' },
+  { path: 'CLAUDE.md', kind: 'file', title: 'The rulebook', body: 'Claude Code reads this first in your vault. It says who you are, where things live and the rules: never invent rates, draft only, keep clients apart. In the Claude app, upload it to your Project.', example: '“Never quote a rate without asking Akshay.”' },
   { path: 'Home.md', kind: 'file', title: 'Your dashboard', body: 'This week’s top 5, live pitches, live campaigns. Open it every morning. Claude keeps it current.', example: 'Top 5 → 1. Send Britannia pitch by Friday' },
   { path: 'Atlas/', kind: 'folder', title: 'Facts that rarely change', body: 'Your business profile and rate card, one note per client, one note per town cluster with its sites.', example: 'Atlas/Clients/Amul.md · Atlas/Cities/Ranchi-cluster.md' },
   { path: 'Efforts/', kind: 'folder', title: 'Every live pitch and campaign', body: 'One folder per pitch or campaign. Each has an Overview: goal, status, next steps, decisions.', example: 'Efforts/Britannia-Summer-2027/Overview.md' },
@@ -456,9 +464,9 @@ export const VAULT = [
 ]
 
 export const STATS = [
-  { title: 'Leads found\nfor you', value: '7373', footer: 'Marketing decision-makers', detail: 'ring' as const },
+  { title: 'Leads found\nfor you', value: '7373', footer: 'Marketing contacts', detail: 'ring' as const },
   { title: 'Towns in\nyour network', value: '100', unit: '+', footer: 'Tier 1, 2 and 3', detail: 'wave' as const },
-  { title: 'Site uptime\nverified', value: '99', unit: '%', footer: 'Proof of execution', detail: 'slider' as const, labels: ['0', '100'] },
+  { title: 'Site uptime\nreported', value: '99', unit: '%', footer: 'VisionOOH figure', detail: 'slider' as const, labels: ['0', '100'] },
   { title: 'Towns live\nin ten days', value: '25', unit: '+', footer: 'Cluster launches', detail: 'cross' as const, labels: ['Launch', 'd1', 'd10'] },
 ]
 

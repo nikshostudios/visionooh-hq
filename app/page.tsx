@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import Hero from '@/components/hero'
 import Hud from '@/components/hud'
@@ -20,23 +20,39 @@ const ICONS = {
 }
 
 const STEPS = [
-  ['01', 'Connect', 'Type what you want in the box above. Claude gets a full briefing about you and VisionOOH.'],
-  ['02', 'Complete missions', 'Seven levels, 10 to 30 minutes each, all on your real work.'],
-  ['03', 'Earn XP and rank up', 'Cadet to Mission Control. Every level complete launches the rocket.'],
+  ['01', 'Connect to Claude', 'Type a task in the box above. Claude opens with a full briefing on you, VisionOOH and your level.'],
+  ['02', 'Do a mission', 'Do the task in Claude, on your real work. Then come back here and tick it.'],
+  ['03', 'Earn XP and rank up', 'Finish a level to earn bonus XP and launch the rocket. Cadet to Mission Control.'],
 ]
 
 export default function Page() {
   const [launch, setLaunch] = useState(0)
+  const [active, setActive] = useState(0)
+  useEffect(() => {
+    const ids = ['top', 'levels', 'brain', 'numbers', 'toolkit']
+    const els = ids.map(id => document.getElementById(id)).filter(Boolean) as HTMLElement[]
+    const io = new IntersectionObserver(
+      entries => {
+        const vis = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (vis) setActive(ids.indexOf(vis.target.id))
+      },
+      { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.1, 0.5] }
+    )
+    els.forEach(e => io.observe(e))
+    return () => io.disconnect()
+  }, [])
   const onLaunch = useCallback(() => {
     setLaunch(k => k + 1)
     document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
   return (
-    <main className='relative'>
+    <main className='relative overflow-x-clip'>
       <div className='fixed left-1/2 top-3 z-[70] -translate-x-1/2'>
         <LiquidNavbar
           tone='dark'
+          active={active}
+          onChange={i => setActive(i)}
           items={[
             { label: 'Home', href: '#top', icon: NimbusIcons.home, fx: 'glow' },
             { label: 'Levels', href: '#levels', icon: ICONS.levels, fx: 'spin' },

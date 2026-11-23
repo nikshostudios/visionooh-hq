@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowUpRight, Check, Clock, Copy, Lock, Rocket, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Check, Clock, Copy, Rocket, Sparkles, Target } from 'lucide-react'
 import { LEVELS, LEVEL_BONUS, QUIZ_XP, type Level } from '@/lib/content'
 import { claudeUrl } from '@/lib/prompt'
 import { levelDone, useProgress } from '@/lib/progress'
@@ -57,6 +57,10 @@ function LevelPanel({ level }: { level: Level }) {
           <span>{tasksDone}/{level.tasks.length} missions</span>
           {finished && <span className='inline-flex items-center gap-1 text-[var(--hq-amber2)]'><Check className='size-3.5' /> Complete</span>}
         </div>
+        <div className='mt-6 flex gap-3 rounded-2xl bg-[var(--hq-amber)]/10 p-4 text-[14.5px] text-[var(--hq-cream)]'>
+          <Target className='mt-0.5 size-4 shrink-0 text-[var(--hq-amber)]' />
+          <span><span className='text-[var(--hq-amber2)]'>Your result:</span> {level.result}</span>
+        </div>
         <p className='hq-label mt-8'>The briefing</p>
         <ul className='mt-3 space-y-3'>
           {level.learn.map((l, i) => (
@@ -67,7 +71,7 @@ function LevelPanel({ level }: { level: Level }) {
           ))}
         </ul>
         <div className='mt-8 rounded-2xl border border-dashed border-[var(--hq-line)] p-4 text-[13px] text-[var(--hq-ash)]'>
-          Finish every mission and ace the quiz for a <span className='text-[var(--hq-amber2)]'>+{LEVEL_BONUS} XP</span> level bonus and a rocket launch.
+          Finish every mission and answer the quick check correctly for a <span className='text-[var(--hq-amber2)]'>+{LEVEL_BONUS} XP</span> level bonus and a rocket launch.
         </div>
       </div>
 
@@ -90,7 +94,8 @@ function LevelPanel({ level }: { level: Level }) {
                     p.toggle(t.id)
                   }}
                   aria-pressed={done}
-                  aria-label={done ? `Mark ${t.title} not done` : `Mark ${t.title} done`}
+                  aria-label={done ? `Mark ${t.title} not done` : `I completed: ${t.title}`}
+                  title={done ? 'Completed. Tap to undo.' : 'Tap when you have done this'}
                   className={cn('relative mt-0.5 grid size-7 shrink-0 place-items-center rounded-full border transition', done ? 'border-[var(--hq-amber)] bg-[var(--hq-amber)] text-[#1a0d04]' : 'border-[var(--hq-ash)]/50 hover:border-[var(--hq-amber)]')}
                 >
                   {done && <Check className='size-4' strokeWidth={3} />}
@@ -123,6 +128,7 @@ function LevelPanel({ level }: { level: Level }) {
           )
         })}
 
+        <p className='px-2 text-[13px] text-[var(--hq-dim)]'>Tick a mission only after you have done it. This is your own training log.</p>
         <div className='rounded-[22px] border border-[var(--hq-line)] bg-white/[0.02] p-5'>
           <p className='hq-label flex items-center gap-2'><Sparkles className='size-3.5 text-[var(--hq-amber)]' /> Quick check · +{QUIZ_XP} XP each</p>
           <div className='mt-4 space-y-5'>
@@ -189,11 +195,13 @@ export default function Levels() {
         <div className='text-right'>
           <p className='font-display text-6xl'>{p.completed}<span className='text-[var(--hq-dim)]'>/7</span></p>
           <p className='hq-label'>levels complete</p>
+          <p className='font-code mt-2 text-[12px] text-[var(--hq-amber2)] sm:hidden'>{p.rank.title} · {p.xp} XP{p.rank.next ? ` · ${p.rank.next.min - p.xp} XP to ${p.rank.next.title}` : ''}</p>
         </div>
       </div>
 
       {/* orbit track */}
-      <div className='relative mt-14 overflow-x-auto pb-4 [scrollbar-width:none]'>
+      <p className='hq-label mt-10 text-right !text-[10px] sm:hidden'>Swipe to see all seven →</p>
+      <div className='relative mt-4 overflow-x-auto pb-4 [mask-image:linear-gradient(to_right,#000_85%,transparent)] [scrollbar-width:none] sm:mt-14 sm:[mask-image:none]'>
         <div className='relative flex min-w-[760px] items-center justify-between px-4'>
           <div className='absolute left-8 right-8 top-[27px] h-px bg-[var(--hq-line)]' />
           <motion.div
@@ -215,7 +223,7 @@ export default function Levels() {
                     !done && !active && 'group-hover:border-[var(--hq-ash)]'
                   )}
                 >
-                  {done ? <Check className='size-5' strokeWidth={2.6} /> : i > firstOpen && firstOpen !== -1 ? <Lock className='size-4 opacity-50' /> : next ? <Rocket className='size-5 text-[var(--hq-amber2)]' /> : l.n}
+                  {done ? <Check className='size-5' strokeWidth={2.6} /> : next ? <Rocket className='size-5 text-[var(--hq-amber2)]' /> : <span className='font-display text-xl'>{l.n}</span>}
                 </span>
                 <span className={cn('font-code text-[10px] tracking-[0.18em] transition', active ? 'text-[var(--hq-cream)]' : 'text-[var(--hq-dim)]')}>{l.code}</span>
                 {next && <span className='absolute -top-6 rounded-full bg-[var(--hq-amber)]/15 px-2 py-0.5 text-[10px] text-[var(--hq-amber2)]'>Next up</span>}
