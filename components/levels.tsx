@@ -7,6 +7,7 @@ import { LEVELS, LEVEL_BONUS, QUIZ_XP, type Level } from '@/lib/content'
 import { claudeUrl } from '@/lib/prompt'
 import { levelDone, useProgress } from '@/lib/progress'
 import { cn } from '@/lib/utils'
+import { HalftoneBackdrop } from '@/components/ui/halftone-flow-hero'
 
 function PromptBox({ text }: { text: string }) {
   const [c, setC] = useState(false)
@@ -47,11 +48,13 @@ function LevelPanel({ level }: { level: Level }) {
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className='grid gap-6 lg:grid-cols-[0.8fr_1.2fr]'
     >
-      <div className='hq-glass relative overflow-hidden rounded-[28px] p-7'>
-        <div className='font-display pointer-events-none absolute -right-4 -top-10 text-[11rem] leading-none text-white/[0.04]'>{level.n}</div>
+      <div className='hq-glass relative overflow-hidden rounded-[28px]'>
+        <HalftoneBackdrop palette='ember' dotSize={6} scrim={0.86} />
+        <div className='relative p-7'>
+        <div className='font-display pointer-events-none absolute -right-4 -top-10 text-[11rem] leading-none text-white/[0.05]'>{level.n}</div>
         <p className='hq-label !text-[var(--hq-amber2)]'>Level {level.n} · {level.code}</p>
         <h3 className='font-display mt-3 text-[2.6rem] leading-[1]'>{level.title}</h3>
-        <p className='mt-2 text-[var(--hq-ash)]'>{level.tagline}</p>
+        <p className='mt-2 text-[var(--hq-cream)]/80'>{level.tagline}</p>
         <div className='mt-5 flex items-center gap-4 text-[13px] text-[var(--hq-ash)]'>
           <span className='inline-flex items-center gap-1.5'><Clock className='size-3.5' /> {level.minutes} min</span>
           <span>{tasksDone}/{level.tasks.length} missions</span>
@@ -71,7 +74,8 @@ function LevelPanel({ level }: { level: Level }) {
           ))}
         </ul>
         <div className='mt-8 rounded-2xl border border-dashed border-[var(--hq-line)] p-4 text-[13px] text-[var(--hq-ash)]'>
-          Finish every mission and answer the quick check correctly for a <span className='text-[var(--hq-amber2)]'>+{LEVEL_BONUS} XP</span> level bonus and a rocket launch.
+          Do every mission and get the quick check right for a <span className='text-[var(--hq-amber2)]'>+{LEVEL_BONUS} XP</span> bonus and a rocket launch.
+        </div>
         </div>
       </div>
 
@@ -117,7 +121,7 @@ function LevelPanel({ level }: { level: Level }) {
                   </div>
                   <p className='mt-1 text-[14.5px] text-[var(--hq-ash)]'>{t.body}</p>
                   {t.link && (
-                    <a href={t.link.href} target={t.link.href.startsWith('#') ? undefined : '_blank'} rel='noreferrer' className='mt-2.5 inline-flex items-center gap-1.5 text-[13.5px] text-[var(--hq-amber2)] hover:underline'>
+                    <a href={t.link.href} target={t.link.href.startsWith('http') ? '_blank' : undefined} rel='noreferrer' className='mt-2.5 inline-flex items-center gap-1.5 text-[13.5px] text-[var(--hq-amber2)] hover:underline'>
                       {t.link.label} <ArrowUpRight className='size-3.5' />
                     </a>
                   )}
@@ -128,7 +132,7 @@ function LevelPanel({ level }: { level: Level }) {
           )
         })}
 
-        <p className='px-2 text-[13px] text-[var(--hq-dim)]'>Tick a mission only after you have done it. This is your own training log.</p>
+        <p className='px-2 text-[13px] text-[var(--hq-dim)]'>Only tick it once you’ve actually done it. It’s your own log, nobody’s checking.</p>
         <div className='rounded-[22px] border border-[var(--hq-line)] bg-white/[0.02] p-5'>
           <p className='hq-label flex items-center gap-2'><Sparkles className='size-3.5 text-[var(--hq-amber)]' /> Quick check · +{QUIZ_XP} XP each</p>
           <div className='mt-4 space-y-5'>
@@ -186,23 +190,23 @@ export default function Levels() {
         <div>
           <p className='hq-label'>02 · The mission map</p>
           <h2 className='font-display mt-4 text-[clamp(2.8rem,6vw,5.4rem)] leading-[0.95]'>
-            Seven levels to <em className='text-[var(--hq-amber2)]'>orbit.</em>
+            Nine levels to <em className='text-[var(--hq-amber2)]'>orbit.</em>
           </h2>
           <p className='mt-4 max-w-xl text-[17px] text-[var(--hq-ash)]'>
-            Each level is 10 to 30 minutes of real work on VisionOOH. Tick missions, pass the quick check, earn XP. Your progress saves on this device.
+            Each level is 10 to 60 minutes of real VisionOOH work, not homework. Do the missions, pass the quick check, earn XP. Progress saves on this device.
           </p>
         </div>
         <div className='text-right'>
-          <p className='font-display text-6xl'>{p.completed}<span className='text-[var(--hq-dim)]'>/7</span></p>
+          <p className='font-display text-6xl'>{p.completed}<span className='text-[var(--hq-dim)]'>/{LEVELS.length}</span></p>
           <p className='hq-label'>levels complete</p>
           <p className='font-code mt-2 text-[12px] text-[var(--hq-amber2)] sm:hidden'>{p.rank.title} · {p.xp} XP{p.rank.next ? ` · ${p.rank.next.min - p.xp} XP to ${p.rank.next.title}` : ''}</p>
         </div>
       </div>
 
       {/* orbit track */}
-      <p className='hq-label mt-10 text-right !text-[10px] sm:hidden'>Swipe to see all seven →</p>
-      <div className='relative mt-4 overflow-x-auto pb-4 [mask-image:linear-gradient(to_right,#000_85%,transparent)] [scrollbar-width:none] sm:mt-14 sm:[mask-image:none]'>
-        <div className='relative flex min-w-[760px] items-center justify-between px-4'>
+      <p className='hq-label mt-10 text-right !text-[10px] sm:hidden'>Swipe to see all nine →</p>
+      <div className='relative mt-4 overflow-x-auto pb-4 pt-9 [mask-image:linear-gradient(to_right,#000_85%,transparent)] [scrollbar-width:none] sm:mt-14 sm:[mask-image:none]'>
+        <div className='relative flex min-w-[940px] items-center justify-between px-4'>
           <div className='absolute left-8 right-8 top-[27px] h-px bg-[var(--hq-line)]' />
           <motion.div
             className='absolute left-8 top-[27px] h-px bg-gradient-to-r from-[var(--hq-amber)] to-[var(--hq-amber2)] shadow-[0_0_14px_var(--hq-amber)]'
@@ -226,7 +230,7 @@ export default function Levels() {
                   {done ? <Check className='size-5' strokeWidth={2.6} /> : next ? <Rocket className='size-5 text-[var(--hq-amber2)]' /> : <span className='font-display text-xl'>{l.n}</span>}
                 </span>
                 <span className={cn('font-code text-[10px] tracking-[0.18em] transition', active ? 'text-[var(--hq-cream)]' : 'text-[var(--hq-dim)]')}>{l.code}</span>
-                {next && <span className='absolute -top-6 rounded-full bg-[var(--hq-amber)]/15 px-2 py-0.5 text-[10px] text-[var(--hq-amber2)]'>Next up</span>}
+                {next && <span className='absolute -top-7 whitespace-nowrap rounded-full bg-[var(--hq-amber)]/15 px-2 py-0.5 text-[10px] text-[var(--hq-amber2)]'>Next up</span>}
               </button>
             )
           })}

@@ -52,7 +52,7 @@ export default function Hud({ onLaunch }: { onLaunch: () => void }) {
         </div>
         <div className='mt-2 flex justify-between text-[10.5px] text-[var(--hq-ash)]'>
           <span>{p.rank.next ? `${nextAt - p.xp} XP to ${p.rank.next.title}` : 'Top rank reached'}</span>
-          <span>{p.completed}/7</span>
+          <span>{p.completed}/{LEVELS.length}</span>
         </div>
         <div className='mt-2.5 flex gap-1'>
           {LEVELS.map((l, i) => (

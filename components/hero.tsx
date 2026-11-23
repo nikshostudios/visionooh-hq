@@ -9,9 +9,9 @@ import { buildPrompt, claudeUrl } from '@/lib/prompt'
 import { useProgress } from '@/lib/progress'
 
 const CHIPS = [
-  'Guide me through my current level',
+  'Take me through my current level',
   'Help me write a pitch for Britannia',
-  'Teach me how a second brain works',
+  'Explain how a second brain works',
   'Prepare me for a client meeting tomorrow',
 ]
 
@@ -98,7 +98,7 @@ export default function Hero({ launchKey }: { launchKey: number }) {
             </button>
           </div>
         </form>
-        <p className='hq-rise mt-3 text-[13px] text-[var(--hq-ash)]' style={{ animationDelay: '.8s' }}>Opens a new Claude chat that already knows you, VisionOOH and your level.</p>
+        <p className='hq-rise mt-3 text-[13px] text-[var(--hq-ash)]' style={{ animationDelay: '.8s' }}>Opens a fresh Claude chat that already knows you, VisionOOH and your level.</p>
         <div className='hq-rise mb-4 mt-3 flex max-w-2xl flex-wrap justify-center gap-2' style={{ animationDelay: '.85s' }}>
           {CHIPS.map(c => (
             <button
@@ -117,7 +117,7 @@ export default function Hero({ launchKey }: { launchKey: number }) {
 
       <div className='relative z-10 mx-auto flex w-full max-w-7xl items-end justify-between px-6 pb-6 font-display text-[clamp(1rem,1.7vw,1.5rem)] leading-tight text-[var(--hq-cream)]/75'>
         <span className='hidden max-w-[14ch] text-left sm:block'>Built for Akshay Jhinga, VisionOOH</span>
-        <span className='hidden max-w-[16ch] text-right sm:block'>that learns, connects and launches.</span>
+        <span className='hidden max-w-[16ch] text-right sm:block'>your AI, learned one level at a time.</span>
         <span className='w-full text-center text-[15px] sm:hidden'>Built for Akshay Jhinga · VisionOOH</span>
       </div>
 
@@ -144,7 +144,7 @@ export default function Hero({ launchKey }: { launchKey: number }) {
               <p className='hq-label'>Your Claude briefing is ready</p>
               <h3 className='font-display mt-3 text-4xl'>Your briefing is <em className='text-[var(--hq-amber2)]'>ready.</em></h3>
               <p className='mt-3 text-[15px] text-[var(--hq-ash)]'>
-                This briefing tells Claude who you are, your business, your level ({p.rank.title}, {p.xp} XP) and what you want. Open it in Claude, or copy and paste it into your “My Business” Project.
+                This tells Claude who you are, your business, your level ({p.rank.title}, {p.xp} XP) and what you want. Open it in Claude, or copy it into your “My Business” Project.
               </p>
               <pre className='font-code mt-5 max-h-56 overflow-auto whitespace-pre-wrap rounded-2xl border border-[var(--hq-line)] bg-black/40 p-4 text-[12px] leading-relaxed text-[var(--hq-ash)]'>
                 {prompt}

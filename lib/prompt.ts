@@ -14,7 +14,7 @@ export function buildPrompt(goal: string, p: Progress) {
 ${PROFILE}
 
 ## My learning journey (VisionOOH HQ)
-I am learning in 7 levels. I have ${p.xp} XP and the rank "${p.rank}". I am on level ${p.currentN}: ${p.currentTitle}.
+I am learning in ${LEVELS.length} levels. I have ${p.xp} XP and the rank "${p.rank}". I am on level ${p.currentN}: ${p.currentTitle}.
 ${levels}
 
 My skills (if installed): ${SKILLS.map(s => s.id).join(', ')}.
