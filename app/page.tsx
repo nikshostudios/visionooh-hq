@@ -1,69 +1,81 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useCallback, useState } from 'react'
+import { motion } from 'motion/react'
+import Hero from '@/components/hero'
+import Hud from '@/components/hud'
+import Levels from '@/components/levels'
+import { BrainExplorer, Footer, Glossary, HowItWorks, Numbers, Toolkit } from '@/components/sections'
+import { LiquidNavbar, NimbusIcons } from '@/components/ui/liquid-glass-navbar'
+
+const ico = (d: React.ReactNode) => (
+  <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'>
+    {d}
+  </svg>
+)
+const ICONS = {
+  levels: ico(<path d='M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Zm0 0v18M4 7.5l8 4.5 8-4.5' />),
+  brain: ico(<><path d='M9 4a3 3 0 0 0-3 3v.2A3 3 0 0 0 4 10a3 3 0 0 0 1 2.2A3 3 0 0 0 7 17a3 3 0 0 0 5 1.6V5.4A3 3 0 0 0 9 4Z' /><path d='M15 4a3 3 0 0 1 3 3v.2a3 3 0 0 1 2 2.8 3 3 0 0 1-1 2.2A3 3 0 0 1 17 17a3 3 0 0 1-5 1.6' /></>),
+  tools: ico(<path d='M14.5 6.5a4 4 0 0 0-5.3 5.3L4 17v3h3l5.2-5.2a4 4 0 0 0 5.3-5.3l-2.5 2.5-2.5-.5-.5-2.5 2.5-2.5Z' />),
+}
+
+const STEPS = [
+  ['01', 'Connect', 'Type what you want in the box above. Claude gets a full briefing about you and VisionOOH.'],
+  ['02', 'Complete missions', 'Seven levels, 10 to 30 minutes each, all on your real work.'],
+  ['03', 'Earn XP and rank up', 'Cadet to Mission Control. Every level complete launches the rocket.'],
+]
+
+export default function Page() {
+  const [launch, setLaunch] = useState(0)
+  const onLaunch = useCallback(() => {
+    setLaunch(k => k + 1)
+    document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className='relative'>
+      <div className='fixed left-1/2 top-3 z-[70] -translate-x-1/2'>
+        <LiquidNavbar
+          tone='dark'
+          items={[
+            { label: 'Home', href: '#top', icon: NimbusIcons.home, fx: 'glow' },
+            { label: 'Levels', href: '#levels', icon: ICONS.levels, fx: 'spin' },
+            { label: 'Brain', href: '#brain', icon: ICONS.brain, fx: 'pop' },
+            { label: 'Launch', href: '#numbers', icon: NimbusIcons.plane, fx: 'plane' },
+            { label: 'Toolkit', href: '#toolkit', icon: ICONS.tools, fx: 'wave' },
+          ]}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+      </div>
+      <Hud onLaunch={onLaunch} />
+      <Hero launchKey={launch} />
+
+      <section className='mx-auto max-w-7xl px-5 pt-10'>
+        <p className='hq-label'>01 · How this works</p>
+        <div className='mt-6 grid gap-px overflow-hidden rounded-[28px] border border-[var(--hq-line)] bg-[var(--hq-line)] md:grid-cols-3'>
+          {STEPS.map(([n, t, b], i) => (
+            <motion.div
+              key={n}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.6 }}
+              className='bg-[var(--hq-bg)] p-8'
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <span className='font-code text-[12px] text-[var(--hq-amber)]'>{n}</span>
+              <p className='font-display mt-3 text-[2rem] leading-none'>{t}</p>
+              <p className='mt-3 text-[15px] text-[var(--hq-ash)]'>{b}</p>
+            </motion.div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      <Levels />
+      <HowItWorks />
+      <BrainExplorer />
+      <Numbers />
+      <Toolkit />
+      <Glossary />
+      <Footer />
+    </main>
+  )
 }
